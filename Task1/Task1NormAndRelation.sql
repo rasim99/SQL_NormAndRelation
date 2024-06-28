@@ -1,0 +1,73 @@
+CREATE DATABASE DrugstoreApp
+USE DrugstoreApp
+CREATE TABLE Owners
+(
+Id INT  PRIMARY KEY  IDENTITY(1,1),
+[Name] NVARCHAR(60) NOT NULL,
+Surname NVARCHAR(60) NOT NULL
+)
+
+CREATE TABLE DrugStores
+(
+Id INT  PRIMARY KEY  IDENTITY(1,1),
+[Name] NVARCHAR(55) NOT NULL,
+Addres NVARCHAR(55) NOT NULL,
+ContactNumber NVARCHAR(55) DEFAULT ('+994123556699' ),
+CreationDate DATE  DEFAULT GETDATE() CHECk(CreationDate<=GETDATE()),
+OwnerId INT FOREIGN KEY REFERENCES Owners(Id)
+)
+
+CREATE TABLE Drugs
+(
+Id INT  PRIMARY KEY  IDENTITY(1,1),
+[Name] NVARCHAR(55) NOT NULL,
+Price FLOAT  NOT NULL,
+[Count] INT,
+DrugStoreId INT FOREIGN KEY REFERENCES DrugStores(Id)
+)
+
+CREATE TABLE Druggists
+(
+Id INT  PRIMARY KEY  IDENTITY(1,1),
+[Name] NVARCHAR(60) NOT NULL,
+Surname NVARCHAR(60) NOT NULL,
+BirthDate DATE  CHECk(BirthDate<= DATEADD(YEAR,-18,GETDATE())),
+Experience FLOAT NOT NULL CHECK(Experience>=1),
+DrugStoreId INT FOREIGN KEY REFERENCES DrugStores(Id)
+)
+
+INSERT INTO Owners
+VALUES(
+'Rasim',
+'Mahmudov'
+)
+
+INSERT INTO DrugStores
+VALUES(
+'AptekB',
+'Baku',
+DEFAULT,
+'2020.02.20',
+2
+)
+
+INSERT INTO Drugs
+VALUES(
+'Ornabiotik',
+25.64,
+120,
+3
+)
+
+INSERT INTO Druggists
+VALUES(
+'Alexa',
+'Violetta',
+'2000.02.25',
+10,
+3
+)
+SELECT * FROM Owners
+SELECT * FROM DrugStores
+SELECT * FROM Drugs
+SELECT * FROM Druggists
